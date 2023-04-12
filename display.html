@@ -9,7 +9,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background-image: url('./img.svg');
+            background-image: url('./img1.svg');
             background-repeat: repeat;
             background-position: center;
             background-size: cover;
@@ -18,8 +18,10 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            let toggle = 1;
             function refreshBackgroundImage() {
-                const imagePath = './img.svg';
+                toggle = 1 - toggle;
+                const imagePath = toggle ? './img1.svg' : './img2.svg';
                 const timestamp = new Date().getTime();
                 document.body.style.backgroundImage = `url(${imagePath}?${timestamp})`;
             }
