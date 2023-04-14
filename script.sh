@@ -8,8 +8,6 @@ TMP_IMG_FILE1="./img1.svg"
 TMP_IMG_FILE2="./img2.svg"
 IMG_FILE_FORMAT="/tmp/img-%s.svg"
 INTERVAL=4
-TOKEN_ADDR="0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03"
-TOKEN_ID=120
 
 toggle=1
 while true; do
