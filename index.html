@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Background</title>
+    <!--
     <style>
         body {
             height: 100%;
@@ -15,23 +16,81 @@
             background-size: cover;
             transition: background-image 5s ease-in-out;
         }
+    </style> -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card {
+            width: calc(100% - 2rem);
+            height: calc(100% - 2rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+        }
+
+        .svg-container {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            vertical-align: middle;
+            overflow: hidden;
+        }
+
+        .svg-container img {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .svg-container img.visible {
+            opacity: 1;
+        }
     </style>
+</head>
+<body>
+    <div class="card">
+        <div id="div-container" class="svg-container">
+            <img id="svg-image" alt="Your SVG Image" onload="" >
+        </div>
+    </div>
+    <script src="svg-inject.v1.2.3.js"></script>
     <script>
+        function setImageSource(src) {
+            document.getElementById("div-container").innerHTML = '<img id="svg-image" alt="Your SVG Image" onload="" >';
+            const imgElement = document.getElementById("svg-image");
+            imgElement.src = src;
+            imgElement.onload = () => {
+                SVGInject(imgElement);
+                imgElement.classList.add("visible");
+            };
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             let toggle = 1;
             function refreshBackgroundImage() {
                 toggle = 1 - toggle;
                 const imagePath = toggle ? './img1.svg' : './img2.svg';
                 const timestamp = new Date().getTime();
-                document.body.style.backgroundImage = `url(${imagePath}?${timestamp})`;
+                setImageSource(`${imagePath}?${timestamp}`);
             }
-        setInterval(refreshBackgroundImage, 5000);
+        setInterval(refreshBackgroundImage, 1500);
     });
 </script>
-</head>
-<body>
-    <div>
-        <!-- Your page content goes here -->
-    </div>
 </body>
 </html>
