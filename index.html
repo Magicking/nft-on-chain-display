@@ -47,18 +47,23 @@
             overflow: hidden;
         }
 
-        .svg-container img {
+        .svg-container {/*
             display: inline-block;
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 100%;*/
+            min-width: 35em;
+            min-height: 35em;
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .invisible {
+            opacity: 0;
         }
 
-        .svg-container img.visible {
+        .visible {
             opacity: 1;
         }
     </style>
@@ -72,13 +77,18 @@
     <script src="./svg-inject.v1.2.3.js"></script>
     <script>
         function setImageSource(src) {
-            document.getElementById("div-container").innerHTML = '<img id="svg-image" alt="Your SVG Image" onload="" >';
-            const imgElement = document.getElementById("svg-image");
-            imgElement.src = src;
-            imgElement.onload = () => {
-                SVGInject(imgElement);
-                imgElement.classList.add("visible");
-            };
+            document.getElementById("div-container").classList.remove("visible")
+            setTimeout(function(){
+                document.getElementById("div-container").innerHTML = '<img id="svg-image" alt="Your SVG Image" onload="" >';
+                const imgElement = document.getElementById("svg-image");
+                imgElement.src = src;
+                imgElement.onload = () => {
+                  SVGInject(imgElement);
+                  imgElement.classList.add("visible");
+                  imgElement.classList.add("svg-container");
+                  document.getElementById("div-container").classList.add("visible")
+                };
+            }, 1000);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -89,7 +99,7 @@
                 const timestamp = new Date().getTime();
                 setImageSource(`${imagePath}?${timestamp}`);
             }
-        setInterval(refreshBackgroundImage, 1500);
+        setInterval(refreshBackgroundImage, 5000);
     });
 </script>
 </body>
